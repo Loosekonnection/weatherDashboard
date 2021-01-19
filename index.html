@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <title>Dave's Portfolio</title>
+</head>
+
+<body class="bg-light">
+
+    <!-- Sticky Nav Section -->
+    <header class="sticky-top">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+            <a class="navbar-brand" href="https://github.com/Loosekonnection/weatherDashboard" target="_blank">GitHub
+                Repo</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav ">
+                    <a class="nav-item nav-link" href="#"><span class="sr-only">(current)</span></a>
+                    <a class="nav-item nav-link" href="#"></a>
+                    <a class="nav-item nav-link" href="#"></a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Banner Section -->
+    <section class="jumbotron jumbotron-fluid bg-info text-white text-center">
+        <div class="container">
+            <h1 class="display-3">Weather Dashboard</h1>
+        </div>
+    </section>
+
+    <!-- Main Section -->
+    <main class="container-fluid">
+        <div class="row content">
+
+            <!-- Side Navbar -->
+            <nav class="col-sm-3 ml-sm-3 ml-lg-5 sidenav border border-gray bg-white">
+                <br>
+                <h4>Search for a City:</h4>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="search-term" placeholder="Search City..">
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn btn-default" id="run-search">
+                            <i class="fa fa-search"></i></button>
+                    </span>
+                </div>
+                <div class="mt-3 text-left">
+
+                    <ul class="" style="list-style: none;">
+                        <li><button type="button" class="btn btn-outline-secondary">Search Result Design Placholder 1</button></li>
+                        <li><button type="button" class="btn btn-outline-secondary">Search Result Design Placholder 2</button></li>
+                        <li><button type="button" class="btn btn-outline-secondary">Search Result Design Placholder 3</button></li>
+                        <li><button type="button" class="btn btn-outline-secondary">Search Result Design Placholder 4</button></li>
+                        <li><button type="button" class="btn btn-outline-secondary">Search Result Design Placholder 5</button></li>
+                        <li><button type="button" class="btn btn-outline-secondary">Search Result Design Placholder 6</button></li>
+                        <li><button type="button" class="btn btn-outline-secondary">Search Result Design Placholder 7</button></li>
+                        <li><button type="button" class="btn btn-outline-secondary">Search Result Design Placholder 8</button></li>
+                    </ul><br>
+
+                </div>
+                <div class="text-center">
+                    <button class="mb-sm-2 btn btn-default" id="clear-all"><i class="fa fa-trash"></i> Clear Results</button>
+                </div>
+                
+            </nav>
+
+            <!-- Column Seperator -->
+            <div class="m-3"></div>
+
+            <!-- Weather Section -->
+            <article class="col-sm-8">
+                
+                <section class="row">
+                    <div class="col border border-gray bg-white" id="currentDay">
+                        <br>
+                        <h2>City placeholder</h2>
+                        <p>Weather content in here!</p>
+                    </div>
+                </section>
+
+                <section class="row mt-2">
+                    <div class="col " id="weekAhead">
+                        <br>
+                        <h3>5-Day Forecast:</h3>
+                        <p>Weather content in here!</p>
+                    </div>
+                </section>
+
+            </article>
+        </div>
+    </main>
+
+
+    <!-- Fixed Footer Section -->
+    <footer class="footer fixed-bottom text-white bg-dark text-center">
+        <div class="container-fluid bg-info pt-2">
+        </div>
+        <div class="row pt-2">
+            <div class="col-12 col-md-6 text-md-right align-items-center ">
+                <ul class="list-unstyled list-inline mb-1">
+                    <li class="list-inline-item "><a href="https://www.github.com/loosekonnection" target="_blank"
+                            class="fa fa-github"></a></li>
+                    <li class="list-inline-item "><a href="https://www.linkedin.com/in/loosekonnection" target="_blank"
+                            class="fa fa-linkedin"></a></li>
+                    <li class="list-inline-item "><a href="https://twitter.com/loosekonnection" target="_blank"
+                            class="fa fa-twitter"></a></li>
+                </ul>
+            </div>
+            <div class="col-12 col-md-6 text-md-left align-items-center">
+                <p>&#169; Copyright 2021 - Loosekonnection</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap jQuery, Popper.js, and Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"
+        integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
