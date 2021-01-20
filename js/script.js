@@ -8,37 +8,45 @@ function storeData(response) {
     localStorage.setItem("data", JSON.stringify(weatherData));
 
     // createHTML();
-
 }
 
 // Update HTML with data from local storage
+function createHTML() {
 
 
 
 
 
 
-// .on("click") event for the 'Search for a City' Button
+}
+
+// .on("click") event for the 'Search for a City' Button that obtains
+// the latitude and longitude
 $("#run-search").on("click", function (event) {
     event.preventDefault();
 
-    searchURL();
-    
-});
-
-
-// Get current day data
-function searchURL() {
-
     var searchedCity = $("#search-term").val().toLowerCase();
     var apiKey = "bd51b2fbd76019c25a3a15ee00180da9";
-    var queryURL = `https://api.openweathermap.org/data/2.5/forecast?q=${searchedCity}&appid=${apiKey}&units=metric`;
+    var queryLonLatURL = `http://api.openweathermap.org/geo/1.0/direct?q=${searchedCity},gb&appid=${apiKey}`;
 
     $.ajax({
-        url: queryURL,
+        url: queryLonLatURL,
+        method: "GET"
+    }).then(runWeatherCall)   
+});
+
+// Obtain current and daily weather forecast details
+function runWeatherCall(response) {
+
+    var lon = response[0].lon;
+    var lat = response[0].lat;
+    var apiKey = "bd51b2fbd76019c25a3a15ee00180da9";
+    var queryOneCallURL = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,alerts&appid=${apiKey}`;
+
+    $.ajax({
+        url: queryOneCallURL,
         method: "GET"
     }).then(storeData)
-
 }
 
 //  .on("click") function for the 'Clear Results' button
@@ -46,9 +54,10 @@ $("#clear-all").on("click", clear);
 
 // Function to empty out the articles and clear localstorage
 function clear() {
+    
     $("#search-results").empty();
     localStorage.clear();
-
+    window.location.reload();
 }
 
 
