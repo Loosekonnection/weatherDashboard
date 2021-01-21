@@ -5,9 +5,16 @@ body {
 /* 5 Day forecast weather boxes */
 .weather-box {
 
-    background-color: #17a2b8;
-    border-radius: 8px;
+    background-color: #007bff;
+    border-radius: 5px;
     color: #fff;
+}
+
+.result-btn {
+    
+    width: 100%;
+    text-align: left;
+    
 }
 
 /* On small screens, set height to 'auto' for sidenav and grid */
