@@ -9,12 +9,19 @@ body {
     border-radius: 5px;
     color: #fff;
 }
-
+/* Search result button */
 .result-btn {
     
     width: 100%;
     text-align: left;
+    font-weight: bold;
     
+}
+
+.forecast-date {
+
+    font-weight: bold;
+    font-size: 24px;
 }
 
 /* On small screens, set height to 'auto' for sidenav and grid */
