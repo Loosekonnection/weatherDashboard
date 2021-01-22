@@ -2,17 +2,39 @@
 var dateTime = luxon.DateTime;
 var today = dateTime.local();
 var currentDate = today.toLocaleString(dateTime.DATE_SHORT)
-var dayOneLuxDate = luxon.DateTime.local().plus({days: 1}).toLocaleString();
-var dayTwoLuxDate = luxon.DateTime.local().plus({days: 2}).toLocaleString();
-var dayThreeLuxDate = luxon.DateTime.local().plus({days: 3}).toLocaleString();
-var dayFourLuxDate = luxon.DateTime.local().plus({days: 4}).toLocaleString();
-var dayFiveLuxDate = luxon.DateTime.local().plus({days: 5}).toLocaleString();
+var dayOneLuxDate = luxon.DateTime.local().plus({ days: 1 }).toLocaleString();
+var dayTwoLuxDate = luxon.DateTime.local().plus({ days: 2 }).toLocaleString();
+var dayThreeLuxDate = luxon.DateTime.local().plus({ days: 3 }).toLocaleString();
+var dayFourLuxDate = luxon.DateTime.local().plus({ days: 4 }).toLocaleString();
+var dayFiveLuxDate = luxon.DateTime.local().plus({ days: 5 }).toLocaleString();
 
 // Global Variables
-var apiKey = "bd51b2fbd76019c25a3a15ee00180da9";
+var apiKey = "3fd96e48e85d496a0159aa462f747730";
 var searchedCity;
 var lat;
 var lon;
+var searchBtnID = 0;
+var weatherDataLS = JSON.parse(localStorage.getItem("weatherDataLS")) || [];
+
+getLocalStorgeData();
+
+// Check localStorage for history
+function getLocalStorgeData() {
+
+    var getWeatherData = $.makeArray(weatherDataLS);
+    $.map(getWeatherData, function (data) {
+
+        $.each(data, function (key, value) {
+
+            searchedCity = value;
+            console.log(value);
+
+
+        })
+        // createSearchHistoryBtn();
+
+    });
+}
 
 // .on("click") event for the 'Search for a City' Button that store the city name in a variable
 $("#run-search").on("click", function (event) {
@@ -26,8 +48,20 @@ $("#run-search").on("click", function (event) {
 // Update HTML with data from local storage
 function createSearchHistoryBtn() {
 
-    var resultBtn = $("<button>").addClass("btn btn-outline-secondary result-btn").text(searchedCity);
+    var resultBtn = $("<button>").addClass("btn btn-outline-secondary result-btn").text(searchedCity).attr("id", searchBtnID++);
     $("#search-results").append(resultBtn);
+    setLocalStorageData();
+}
+
+// Store data in localstorage
+function setLocalStorageData() {
+
+    var weatherData = {
+        // "btnID": searchBtnID,
+        "city": searchedCity
+    };
+    weatherDataLS.push(weatherData);
+    localStorage.setItem("weatherDataLS", JSON.stringify(weatherDataLS));
 }
 
 // API Call using city name to return latitude and longitude
@@ -39,13 +73,6 @@ function queryCity() {
         url: queryLonLatURL,
         method: "GET"
     }).then(runWeatherCall)
-}
-
-// store data in local storage
-function storeData(response) {
-
-    weatherData.push(response);
-    localStorage.setItem("data", JSON.stringify(weatherData));
 }
 
 // Obtain current and daily weather forecast details using captured latitude and longitude
@@ -65,46 +92,38 @@ function runWeatherCall(response) {
 // Create HTML using current weather data
 function currentForecast(forecast) {
 
-    
+
     // Current Day Forecast
     // Empty Current Weather HTML section with id="currentDay"
     $("#currentDay").empty();
-    
-    // Variables of API data
-    var currentIcon = forecast.current.weather[0].icon;
-    var currentIconURL = "http://openweathermap.org/img/w/" + currentIcon + ".png";
-    var currentTemp = forecast.current.temp;
-    var currentHumid = forecast.current.humidity;
-    var currentWindSpeed = forecast.current.wind_speed;
-    var currentUVI = forecast.current.uvi;
-    // variables for dynamic HTML content using variables containing API data 
+
+    // Variables of API & dynamic HTML content using variables containing API data 
     var sectionDiv = $("<div>").addClass("col border border-gray bg-white pt-3");
     var cityName = $("<h2>").text(searchedCity + " " + "(" + currentDate + ")");
-    var currentLogo = $("<img>").attr("src", currentIconURL);
-    var cityTemp = $("<p>").text("Temperature: " + currentTemp + " " + String.fromCharCode(176) + "C");
-    var cityHumid = $("<p>").text("Humidity: " + currentHumid + "%");
-    var cityWindSpeed = $("<p>").text("Wind Speed: " + currentWindSpeed + " MPH");
+    var currentLogo = $("<img>").attr("src", "http://openweathermap.org/img/w/" + forecast.current.weather[0].icon + ".png");
+    var cityTemp = $("<p>").text("Temperature: " + forecast.current.temp + " " + String.fromCharCode(176) + "C");
+    var cityHumid = $("<p>").text("Humidity: " + forecast.current.humidity + "%");
+    var cityWindSpeed = $("<p>").text("Wind Speed: " + forecast.current.wind_speed + " MPH");
     var cityUVI = $("<p>").text("UV Index: ");
     var cityUVISpan;
 
-        if (currentUVI >= 3 && currentUVI < 6) {
-            cityUVISpan = $("<span>").text(currentUVI).addClass("uvi-moderate");
-        } else if (currentUVI >= 6 && currentUVI < 8) {
-            cityUVISpan = $("<span>").text(currentUVI).addClass("uvi-high");
-        } else if (currentUVI >= 8 && currentUVI < 10) {
-            cityUVISpan = $("<span>").text(currentUVI).addClass("uvi-veryhigh");
-        } else if (currentUVI < 3) {
-            cityUVISpan = $("<span>").text(currentUVI).addClass("uvi-low");
-        }
+    if (forecast.current.uvi >= 3 && forecast.current.uvi < 6) {
+        cityUVISpan = $("<span>").text(forecast.current.uvi).addClass("uvi-moderate");
+    } else if (forecast.current.uvi >= 6 && forecast.current.uvi < 8) {
+        cityUVISpan = $("<span>").text(forecast.current.uvi).addClass("uvi-high");
+    } else if (forecast.current.uvi >= 8 && forecast.current.uvi < 10) {
+        cityUVISpan = $("<span>").text(forecast.current.uvi).addClass("uvi-veryhigh");
+    } else if (forecast.current.uvi < 3) {
+        cityUVISpan = $("<span>").text(forecast.current.uvi).addClass("uvi-low");
+    }
 
-    // Order of HTML content created
+    // Current day align HTML content
     $("#currentDay").append(sectionDiv);
     sectionDiv.append(cityName, cityTemp, cityHumid, cityWindSpeed, cityUVI);
     cityName.append(currentLogo);
     cityUVI.append(cityUVISpan);
 
-    // Week ahead forecast
-    // Empty 5-Day Weather Forecast HTML section with id="weekAhead"
+    // 5-Day week ahead forecast
     $("#weekAhead").empty();
     // Create HTML title
     var sectionDiv = $("<div>").addClass("col mt-2");
@@ -114,79 +133,54 @@ function currentForecast(forecast) {
     sectionDiv.append(forecastTitle);
     var forecastDiv = $("<div>").addClass("row");
     sectionDiv.append(forecastDiv);
-    
-    // Day 1 Variables of API data
-    var dayOneDataIcon = forecast.daily[0].weather[0].icon;
-    var dayOneDataIconURL = "http://openweathermap.org/img/w/" + dayOneDataIcon + ".png";
-    var dayOneDataTemp = forecast.daily[0].temp.day;
-    var dayOneDataHumid = forecast.daily[0].humidity;
-    // variables of dynamic HTML content using variables of API data
+
+    // Day 1 Variables & dynamic HTML content using variables of API data
     var dayOneDiv = $("<div>").addClass("col m-4 weather-box");
     var dayOneDate = $("<p>").text(dayOneLuxDate).addClass("forecast-date mt-2");
-    var dayOneImg = $("<img>").attr("src", dayOneDataIconURL);
-    var dayOneTemp = $("<p>").text("Temp: " + dayOneDataTemp + " " + String.fromCharCode(176) + "C").addClass("mt-2");
-    var dayOneHumid = $("<p>").text("Humidity: " + dayOneDataHumid + "%");
-    // Create Day 1 HTML 
+    var dayOneImg = $("<img>").attr("src", "http://openweathermap.org/img/w/" + forecast.daily[0].weather[0].icon + ".png");
+    var dayOneTemp = $("<p>").text("Temp: " + forecast.daily[0].temp.day + " " + String.fromCharCode(176) + "C").addClass("mt-2");
+    var dayOneHumid = $("<p>").text("Humidity: " + forecast.daily[0].humidity + "%");
+    // Align Day 1 HTML 
     forecastDiv.append(dayOneDiv);
     dayOneDiv.append(dayOneDate, dayOneImg, dayOneTemp, dayOneHumid);
 
-    // Day 2 Variables of API data
-    var dayTwoDataIcon = forecast.daily[1].weather[0].icon;
-    var dayTwoDataIconURL = "http://openweathermap.org/img/w/" + dayTwoDataIcon + ".png";
-    var dayTwoDataTemp = forecast.daily[1].temp.day;
-    var dayTwoDataHumid = forecast.daily[1].humidity;
-    // variables of dynamic HTML content using variables of API data
+    // Day 2 Variables &dynamic HTML content using variables of API data
     var dayTwoDiv = $("<div>").addClass("col m-4 weather-box");
     var dayTwoDate = $("<p>").text(dayTwoLuxDate).addClass("forecast-date mt-2");
-    var dayTwoImg = $("<img>").attr("src", dayTwoDataIconURL);
-    var dayTwoTemp = $("<p>").text("Temp: " + dayTwoDataTemp + " " + String.fromCharCode(176) + "C").addClass("mt-2");
-    var dayTwoHumid = $("<p>").text("Humidity: " + dayTwoDataHumid + "%");
-    // Create Day 2 HTML 
+    var dayTwoImg = $("<img>").attr("src", "http://openweathermap.org/img/w/" + forecast.daily[1].weather[0].icon + ".png");
+    var dayTwoTemp = $("<p>").text("Temp: " + forecast.daily[1].temp.day + " " + String.fromCharCode(176) + "C").addClass("mt-2");
+    var dayTwoHumid = $("<p>").text("Humidity: " + forecast.daily[1].humidity + "%");
+    // Align Day 2 HTML 
     forecastDiv.append(dayTwoDiv);
     dayTwoDiv.append(dayTwoDate, dayTwoImg, dayTwoTemp, dayTwoHumid);
 
-    // Day 3 Variables of API data
-    var dayThreeDataIcon = forecast.daily[2].weather[0].icon;
-    var dayThreeDataIconURL = "http://openweathermap.org/img/w/" + dayThreeDataIcon + ".png";
-    var dayThreeDataTemp = forecast.daily[2].temp.day;
-    var dayThreeDataHumid = forecast.daily[2].humidity;
-    // variables of dynamic HTML content using variables of API data
+    // Day 3 Variables & dynamic HTML content using variables of API data
     var dayThreeDiv = $("<div>").addClass("col m-4 weather-box");
     var dayThreeDate = $("<p>").text(dayThreeLuxDate).addClass("forecast-date mt-2");
-    var dayThreeImg = $("<img>").attr("src", dayThreeDataIconURL);
-    var dayThreeTemp = $("<p>").text("Temp: " + dayThreeDataTemp + " " + String.fromCharCode(176) + "C").addClass("mt-2");
-    var dayThreeHumid = $("<p>").text("Humidity: " + dayThreeDataHumid + "%");
-    // Create Day 3 HTML 
+    var dayThreeImg = $("<img>").attr("src", "http://openweathermap.org/img/w/" + forecast.daily[2].weather[0].icon + ".png");
+    var dayThreeTemp = $("<p>").text("Temp: " + forecast.daily[2].temp.day + " " + String.fromCharCode(176) + "C").addClass("mt-2");
+    var dayThreeHumid = $("<p>").text("Humidity: " + forecast.daily[2].humidity + "%");
+    // Align Day 3 HTML 
     forecastDiv.append(dayThreeDiv);
     dayThreeDiv.append(dayThreeDate, dayThreeImg, dayThreeTemp, dayThreeHumid);
 
-    // Day 4 Variables of API data
-    var dayFourDataIcon = forecast.daily[3].weather[0].icon;
-    var dayFourDataIconURL = "http://openweathermap.org/img/w/" + dayFourDataIcon + ".png";
-    var dayFourDataTemp = forecast.daily[3].temp.day;
-    var dayFourDataHumid = forecast.daily[3].humidity;
-    // variables of dynamic HTML content using variables of API data
+    // Day 4 Variables & dynamic HTML content using variables of API data
     var dayFourDiv = $("<div>").addClass("col m-4 weather-box");
     var dayFourDate = $("<p>").text(dayFourLuxDate).addClass("forecast-date mt-2");
-    var dayFourImg = $("<img>").attr("src", dayFourDataIconURL);
-    var dayFourTemp = $("<p>").text("Temp: " + dayFourDataTemp + " " + String.fromCharCode(176) + "C").addClass("mt-2");
-    var dayFourHumid = $("<p>").text("Humidity: " + dayFourDataHumid + "%");
-    // Create Day 4 HTML 
+    var dayFourImg = $("<img>").attr("src", "http://openweathermap.org/img/w/" + forecast.daily[3].weather[0].icon + ".png");
+    var dayFourTemp = $("<p>").text("Temp: " + forecast.daily[3].temp.day + " " + String.fromCharCode(176) + "C").addClass("mt-2");
+    var dayFourHumid = $("<p>").text("Humidity: " + forecast.daily[3].humidity + "%");
+    // Align Day 4 HTML 
     forecastDiv.append(dayFourDiv);
     dayFourDiv.append(dayFourDate, dayFourImg, dayFourTemp, dayFourHumid);
-    
-    // Day 5 Variables of API data
-    var dayFiveDataIcon = forecast.daily[4].weather[0].icon;
-    var dayFiveDataIconURL = "http://openweathermap.org/img/w/" + dayFiveDataIcon + ".png";
-    var dayFiveDataTemp = forecast.daily[4].temp.day;
-    var dayFiveDataHumid = forecast.daily[4].humidity;
-    // variables of dynamic HTML content using variables of API data
+
+    // Day 5 Variables & dynamic HTML content using variables of API data
     var dayFiveDiv = $("<div>").addClass("col m-4 weather-box");
     var dayFiveDate = $("<p>").text(dayFiveLuxDate).addClass("forecast-date mt-2");
-    var dayFiveImg = $("<img>").attr("src", dayFiveDataIconURL);
-    var dayFiveTemp = $("<p>").text("Temp: " + dayFiveDataTemp + " " + String.fromCharCode(176) + "C").addClass("mt-2");
-    var dayFiveHumid = $("<p>").text("Humidity: " + dayFiveDataHumid + "%");
-    // Create Day 5 HTML 
+    var dayFiveImg = $("<img>").attr("src", "http://openweathermap.org/img/w/" + forecast.daily[4].weather[0].icon + ".png");
+    var dayFiveTemp = $("<p>").text("Temp: " + forecast.daily[4].temp.day + " " + String.fromCharCode(176) + "C").addClass("mt-2");
+    var dayFiveHumid = $("<p>").text("Humidity: " + forecast.daily[4].humidity + "%");
+    // Align Day 5 HTML 
     forecastDiv.append(dayFiveDiv);
     dayFiveDiv.append(dayFiveDate, dayFiveImg, dayFiveTemp, dayFiveHumid);
 }
