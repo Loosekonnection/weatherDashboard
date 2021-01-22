@@ -33,7 +33,7 @@ function createSearchHistoryBtn() {
 // API Call using city name to return latitude and longitude
 function queryCity() {
 
-    var queryLonLatURL = `http://api.openweathermap.org/geo/1.0/direct?q=${searchedCity}&appid=${apiKey}`;
+    var queryLonLatURL = `https://api.openweathermap.org/geo/1.0/direct?q=${searchedCity}&appid=${apiKey}`;
 
     $.ajax({
         url: queryLonLatURL,
