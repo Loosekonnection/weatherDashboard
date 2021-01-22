@@ -50,8 +50,10 @@
     <main class="container-fluid">
         <div class="row content">
 
+            <div class="col-sm-2"></div>
+
             <!-- Side Navbar -->
-            <nav class="col-sm-3 ml-sm-3 ml-lg-5 sidenav border border-gray bg-white">
+            <nav class="col-sm-2 sidenav border border-gray bg-white">
                 <br>
                 <h4>Search for a City:</h4>
                 <div class="input-group">
@@ -63,7 +65,7 @@
                 </div>
                 <!-- Search City History -->
                 <div class="mt-3 text-left" id="search-results">
-                    
+
                 </div>
                 <div class="text-center">
                     <button class="mb-sm-2 mt-2 btn btn-default" id="clear-all"><i class="fa fa-trash"></i> Clear
@@ -75,16 +77,18 @@
             <div class="m-3"></div>
 
             <!-- Weather Section -->
-            <article class="col-sm-8">
+            <article class="col-sm-6">
 
                 <!-- Current Weather -->
                 <section class="row" id="currentDay">
                 </section>
 
-                <!-- Wheather Forecast -->
-                <section class="row mt-2" id="weekAhead">   
+                <!-- 5-Day Weather Forecast -->
+                <section class="row mt-2" id="weekAhead">
                 </section>
             </article>
+
+            <div class="col-sm-2 m-2"></div>
 
         </div>
     </main>

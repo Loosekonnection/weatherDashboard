@@ -4,31 +4,51 @@ body {
 
 /* 5 Day forecast weather boxes */
 .weather-box {
-
     background-color: #007bff;
+    box-shadow: 5px 10px 18px #888888;
     border-radius: 5px;
     color: #fff;
 }
+
 /* Search result button */
-.result-btn {
-    
+.result-btn {  
     width: 100%;
     text-align: left;
     font-weight: bold;
     
 }
 
-.forecast-date {
-
-    font-weight: bold;
-    font-size: 24px;
+/* UVI Index */
+.uvi-low {
+    color: #fff;
+    background-color: green;
+    border-radius: 5px;
+    padding: 5px;
 }
 
-/* On small screens, set height to 'auto' for sidenav and grid */
-@media screen and (max-width: 767px) {
-  .sidenav {
-    height: auto;
-    padding: 15px;
-  }
-  .row.content {height: auto;} 
+.uvi-moderate {
+    color: #fff;
+    background-color: orange;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.uvi-high {
+    color: #fff;
+    background-color: orangered;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.uvi-veryhigh {
+    color: #fff;
+    background-color: red;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+/* 5-Day Forecast date */
+.forecast-date {
+    font-weight: 500;
+    font-size: 22px;
 }
