@@ -65,10 +65,11 @@ Weather Forecast Dashboard
 
 ## Credits
 
-*   University of Birmingham [Coding Boot Camp](https://bootcamp.birmingham.ac.uk/coding/)
-*   Modern JavaScript (Novice to Ninja) [The Net Ninja](https://www.thenetninja.co.uk/courses/modern-javascript-tutorial)
+*   University of Birmingham [Coding Boot Camp](https://bootcamp.birmingham.ac.uk/coding/).
+*   Modern JavaScript (Novice to Ninja) [The Net Ninja](https://www.thenetninja.co.uk/courses/modern-javascript-tutorial).
 *   Most of the answers to my research on this project have come from [Stack Overflow](https://stackoverflow.com/).
 *   For syntax help when finding a solution elsewhere [w3schools.com](https://www.w3schools.com/jsref/default.asp) is and has been a fantastic reference guide to use along with Stack Overflow.
+*   Everything you need to know about Local Storage [localStorage](https://www.boldare.com/blog/everything-you-need-to-know-about-local-storage/).
 
 ---
 <br>
