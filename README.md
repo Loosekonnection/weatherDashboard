@@ -10,8 +10,11 @@ Weather Forecast Dashboard
 ## Pseudo Code
 <br>
 
-*   The weather dashboard is to provide the current days weather as well as a 5 day forecast.
-*   To acheieve this it will require an API weather provider.
+*   The weather dashboard is to provide the current day's weather as well as a 5 day forecast.
+*   To acheieve this it will require an API weather provider, for this I have used:
+
+    *   [OpenWeather API](https://openweathermap.org/api)
+
 *   From the API data I need to capture:
 
     *   Weather Image
@@ -21,12 +24,12 @@ Weather Forecast Dashboard
     *   UV Index (colour coded)
 
 *   The webpage will need a search field for the end user to type a city name in. 
-*   When the the end user searches for a city, the city name will need to be shown in a search history area.
-*   The city name in the search area should be clickable to return the weather back to the web page.
-*   The current days weather should be displayed to the right of the search area within its own area.
+*   When the end user searches for a city, the city name will need to be shown in a search history area as a button.
+*   The city name in the search area should then be clickable to return the weather back to the web page, if a user has searched for additional cities.
+*   The current day's weather should be dynamically displayed to the right of the search area within its own area/frame.
 *   The 5-day summary forecast should be presented below the current day.
-*   Each of the days ahead needs to be clearly seperated out to make each day easily identifiable. 
-*   Each of the 5-day summary should contain:
+*   Each of the days ahead needs to be clearly seperated out in to cards to make each day easily identifiable. 
+*   Each of the 5-day summary cards should contain:
 
     *   Weather Image
     *   Temperature
