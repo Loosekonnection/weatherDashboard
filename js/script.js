@@ -13,55 +13,49 @@ var apiKey = "3fd96e48e85d496a0159aa462f747730";
 var searchedCity;
 var lat;
 var lon;
-var searchBtnID = 0;
 var weatherDataLS = JSON.parse(localStorage.getItem("weatherDataLS")) || [];
 
 getLocalStorgeData();
 
-// Check localStorage for history
-function getLocalStorgeData() {
-
-    var getWeatherData = $.makeArray(weatherDataLS);
-    $.map(getWeatherData, function (data) {
-
-        $.each(data, function (key, value) {
-
-            searchedCity = value;
-            console.log(value);
-
-
-        })
-        // createSearchHistoryBtn();
-
-    });
-}
-
-// .on("click") event for the 'Search for a City' Button that store the city name in a variable
+// .on("click") event for the 'Search for a City' Button that stores the input city name in a variable
 $("#run-search").on("click", function (event) {
     event.preventDefault();
 
     searchedCity = $("#search-term").val();
-    createSearchHistoryBtn();
-    queryCity();
-});
-
-// Update HTML with data from local storage
-function createSearchHistoryBtn() {
-
-    var resultBtn = $("<button>").addClass("btn btn-outline-secondary result-btn").text(searchedCity).attr("id", searchBtnID++);
-    $("#search-results").append(resultBtn);
     setLocalStorageData();
-}
+});
 
 // Store data in localstorage
 function setLocalStorageData() {
 
     var weatherData = {
-        // "btnID": searchBtnID,
         "city": searchedCity
     };
     weatherDataLS.push(weatherData);
     localStorage.setItem("weatherDataLS", JSON.stringify(weatherDataLS));
+    getLocalStorgeData();
+}
+
+// Check localStorage for historic searches
+function getLocalStorgeData() {
+    
+    $("#search-results").empty();
+    $.each(weatherDataLS, function (key, value) {
+
+        if (value.city) {
+            createSearchHistoryBtn(value.city);
+        }
+    }); 
+    $(function(){
+        $(".result-btn").last().click();
+    })
+}
+
+// Create search history button with city name from local storage
+function createSearchHistoryBtn(city) {
+
+    var resultBtn = $("<button>").addClass("btn btn-outline-secondary result-btn").text(city);
+    $("#search-results").append(resultBtn);
 }
 
 // API Call using city name to return latitude and longitude
@@ -72,10 +66,10 @@ function queryCity() {
     $.ajax({
         url: queryLonLatURL,
         method: "GET"
-    }).then(runWeatherCall)
+    }).then(runWeatherCall);
 }
 
-// Obtain current and daily weather forecast details using captured latitude and longitude
+// Obtain current and daily weather forecast details using latitude and longitude from queryCity API call
 function runWeatherCall(response) {
 
     lat = response[0].lat;
@@ -86,12 +80,11 @@ function runWeatherCall(response) {
     $.ajax({
         url: queryOneCallURL,
         method: "GET"
-    }).then(currentForecast)
+    }).then(weatherForecast);
 }
 
 // Create HTML using current weather data
-function currentForecast(forecast) {
-
+function weatherForecast(forecast) {
 
     // Current Day Forecast
     // Empty Current Weather HTML section with id="currentDay"
@@ -185,13 +178,21 @@ function currentForecast(forecast) {
     dayFiveDiv.append(dayFiveDate, dayFiveImg, dayFiveTemp, dayFiveHumid);
 }
 
-//  .on("click") function for the 'Clear Results' button
-$("#clear-all").on("click", clear);
+// .on("click") City search history button
+$("nav").on("click", ".result-btn", function (event) {
+    event.preventDefault();
 
-// Function to empty out the articles and clear localstorage
-function clear() {
+    searchedCity = $(this).text();
+    queryCity();
+});
+
+//  .on("click") Function for the 'Clear Results' button
+$("#clear-all").on("click", function (event) {
+    event.preventDefault();
 
     $("#search-results").empty();
     localStorage.clear();
     window.location.reload();
-}
+});
+
+
