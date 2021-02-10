@@ -22,6 +22,7 @@ $("#run-search").on("click", function (event) {
     event.preventDefault();
 
     searchedCity = $("#search-term").val();
+    $("#search-term").val('');
     setLocalStorageData();
 });
 
