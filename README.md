@@ -10,7 +10,7 @@ Weather Forecast Dashboard
 ## Pseudo Code
 <br>
 
-*   The weather dashboard is to provide the current day's weather as well as a 5 day forecast.
+*   The weather dashboard is to provide the current day's weather as well as a 5-day forecast.
 *   To acheieve this it will require an API weather provider, for this I have used:
 
     *   [OpenWeather API](https://openweathermap.org/api)
