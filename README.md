@@ -41,6 +41,18 @@ Weather Forecast Dashboard
 
 <br>
 
+## Technolgies Used
+
+*   HMTL [w3schools.com Learn HTML](https://www.w3schools.com/html/default.asp)
+*   CSS [w3schools.com Learn CSS](https://www.w3schools.com/css/default.asp)
+*   Boostrap [w3schools.com Bootstrap4 Tutorial](https://www.w3schools.com/bootstrap4/default.asp)
+*   JavaScript [w3schools.com JavaScript Tutorial](https://www.w3schools.com/js/default.asp)
+*   jQuery [w3schools.com jQuery Tutorial](https://www.w3schools.com/jquery/default.asp)
+---
+
+<br>
+
+
 ## Using the Weather Dashboard
 <br>
 
