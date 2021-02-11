@@ -11,6 +11,7 @@ var dayFiveLuxDate = luxon.DateTime.local().plus({ days: 5 }).toLocaleString();
 // Global Variables
 var apiKey = "3fd96e48e85d496a0159aa462f747730";
 var searchedCity;
+var city;
 var lat;
 var lon;
 var weatherDataLS = JSON.parse(localStorage.getItem("weatherDataLS")) || [];
@@ -75,6 +76,7 @@ function runWeatherCall(response) {
 
     lat = response[0].lat;
     lon = response[0].lon;
+    city = response[0].name;
 
     var queryOneCallURL = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=metric&exclude=minutely,hourly,alerts&appid=${apiKey}`;
 
@@ -93,7 +95,7 @@ function weatherForecast(forecast) {
 
     // Variables of API & dynamic HTML content using variables containing API data 
     var sectionDiv = $("<div>").addClass("col border border-gray bg-white pt-3");
-    var cityName = $("<h2>").text(searchedCity + " " + "(" + currentDate + ")");
+    var cityName = $("<h2>").text(city + " " + "(" + currentDate + ")");
     var currentLogo = $("<img>").attr("src", "https://openweathermap.org/img/w/" + forecast.current.weather[0].icon + ".png");
     var cityTemp = $("<p>").text("Temperature: " + forecast.current.temp + " " + String.fromCharCode(176) + "C");
     var cityHumid = $("<p>").text("Humidity: " + forecast.current.humidity + "%");
