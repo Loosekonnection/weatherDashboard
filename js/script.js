@@ -23,15 +23,16 @@ $("#run-search").on("click", function (event) {
     event.preventDefault();
 
     searchedCity = $("#search-term").val();
+    var city = searchedCity.charAt(0).toUpperCase() + searchedCity.slice(1);
     $("#search-term").val('');
-    setLocalStorageData();
+    setLocalStorageData(city);
 });
 
 // Store data in localstorage
-function setLocalStorageData() {
+function setLocalStorageData(city) {
 
     var weatherData = {
-        "city": searchedCity
+        "city": city
     };
     weatherDataLS.push(weatherData);
     localStorage.setItem("weatherDataLS", JSON.stringify(weatherDataLS));
@@ -50,13 +51,13 @@ function getLocalStorgeData() {
     }); 
     $(function(){
         $(".result-btn").last().click();
-    })
+    });
 }
 
 // Create search history button with city name from local storage
 function createSearchHistoryBtn(city) {
 
-    var resultBtn = $("<button>").addClass("btn btn-outline-secondary result-btn").text(city);
+    var resultBtn = $("<button>").attr("data-city", city).addClass("btn btn-outline-secondary result-btn").text(city);
     $("#search-results").append(resultBtn);
 }
 
